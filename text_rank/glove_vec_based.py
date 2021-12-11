@@ -6,11 +6,10 @@ from utils.word_vectors import cos_similarity
 
 
 class GloveVecBasedTextRank(TextRank):
-    def __init__(self, lang):
+    def __init__(self, lang, vec_file):
         super().__init__(lang)
         self.embeddings = {}
-        glove_file = 'glove.6B.100d.txt'
-        self.embeddings = pd.read_csv(glove_file, sep=" ", index_col=0, header=None, quoting=csv.QUOTE_NONE,
+        self.embeddings = pd.read_csv(vec_file, sep=" ", index_col=0, header=None, quoting=csv.QUOTE_NONE,
                                       na_values=None, keep_default_na=False)
         self.default_embedding = np.zeros((100, 1))
 
@@ -38,7 +37,7 @@ class GloveVecBasedTextRank(TextRank):
 
 
 if __name__ == '__main__':
-    summarizer = GloveVecBasedTextRank('en_core_web_sm')
+    summarizer = GloveVecBasedTextRank('en_core_web_sm', 'glove.6B.100d.txt')
     df = pd.read_csv("tennis_articles.csv")
     text = df['article_text'][0]
 
