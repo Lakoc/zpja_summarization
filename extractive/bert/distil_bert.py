@@ -9,6 +9,8 @@ from extractive.bert.utils import _process_src, _block_tri
 
 
 class DistilBert(Extractive):
+    """https://github.com/chriskhanhtran/bert-extractive-summarization/"""
+
     def __init__(self, checkpoint_path, lang):
         super().__init__(lang)
         checkpoint = torch.load(checkpoint_path, map_location='cpu')
