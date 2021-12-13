@@ -1,6 +1,7 @@
-from base import TextRank
 import pandas as pd
 import numpy as np
+
+from extractive.text_rank.text_rank_base import TextRank
 
 
 class CommonBasedTextRank(TextRank):

@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import csv
-from base import TextRank
+from extractive.text_rank.text_rank_base import TextRank
 from utils.word_vectors import cos_similarity
 
 
@@ -37,7 +37,7 @@ class GloveVecBasedTextRank(TextRank):
 
 
 if __name__ == '__main__':
-    summarizer = GloveVecBasedTextRank('en_core_web_sm', 'glove.6B.100d.txt')
+    summarizer = GloveVecBasedTextRank('en_core_web_sm', 'data/glove.6B.100d.txt')
     df = pd.read_csv("tennis_articles.csv")
     text = df['article_text'][0]
 

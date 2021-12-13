@@ -1,15 +1,11 @@
-import spacy
-from abc import abstractmethod, ABC
+from abc import ABC
+from extractive.base import Extractive
 import networkx as nx
 
 
-class TextRank(ABC):
+class TextRank(Extractive, ABC):
     def __init__(self, lang):
-        self.en_nlp = spacy.load(lang)
-
-    @abstractmethod
-    def summarize(self, document, num_sentences):
-        pass
+        super().__init__(lang)
 
     @staticmethod
     def process_text_ranking(sim_mat, sentences, num_sentences):

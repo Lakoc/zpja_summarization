@@ -1,10 +1,10 @@
-from base import TextRank
+from extractive.base import Extractive
 import pandas as pd
 # noinspection PyUnresolvedReferences
 import pytextrank
 
 
-class PhrasesBasedTextRank(TextRank):
+class PhrasesBasedTextRank(Extractive):
     def __init__(self, lang):
         super().__init__(lang)
         self.en_nlp.add_pipe("textrank", config={"stopwords": {"word": ["NOUN"]}})
