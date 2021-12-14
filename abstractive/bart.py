@@ -5,7 +5,7 @@ class BartSummary:
     def __init__(self):
         self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
-    def summarize(self, document, min_len, max_len):
+    def summarize(self, document, min_len=5, max_len=100):
         summary_text = self.summarizer(document, max_length=max_len, min_length=min_len, do_sample=False)[0][
             'summary_text']
         return summary_text
