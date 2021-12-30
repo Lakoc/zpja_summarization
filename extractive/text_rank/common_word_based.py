@@ -1,11 +1,10 @@
-import pandas as pd
 import numpy as np
 
 from extractive.text_rank.text_rank_base import TextRank
 
 
 class CommonBasedTextRank(TextRank):
-    def __init__(self, lang):
+    def __init__(self, lang='en_core_web_sm'):
         super().__init__(lang)
 
     @staticmethod
@@ -31,15 +30,5 @@ class CommonBasedTextRank(TextRank):
         cleaned_sentences = [[token.lemma_.lower() for token in sentence if
                               not token.is_stop and not token.is_punct] for sentence in sentences]
         sim_mat = self.create_sim_matrix(cleaned_sentences)
-        ranked_sentences = self.process_text_ranking(sim_mat, sentences, num_sentences)
+        ranked_sentences = [sent.text for sent in self.process_text_ranking(sim_mat, sentences, num_sentences)]
         return ranked_sentences
-
-
-if __name__ == '__main__':
-    summarizer = CommonBasedTextRank('en_core_web_sm')
-    df = pd.read_csv("tennis_articles.csv")
-    text = df['article_text'][0]
-
-    summarization = summarizer.summarize(text, 2)
-    for out_sentence in summarization:
-        print(out_sentence)

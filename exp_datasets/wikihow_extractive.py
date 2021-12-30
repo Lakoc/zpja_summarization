@@ -13,6 +13,7 @@ class WikiHow:
     def __init__(self, split):
         self.dataset = load_dataset("wikihow", "all", data_dir="data", split=split)
         self.rouge = load_metric("rouge")
+        self.create_extractive_text()
 
     @staticmethod
     def process_single_summary(element, **kwargs):
@@ -21,6 +22,14 @@ class WikiHow:
         end = time.time()
         element['time'] = end - start
         return element
+
+    @staticmethod
+    def concat_summary(element):
+        element['text'] = element['text'] + element['headline']
+        return element
+
+    def create_extractive_text(self):
+        self.dataset = self.dataset.map(self.concat_summary)
 
     def process_summarization(self, function, **kwargs):
         self.dataset = self.dataset.map(self.process_single_summary, fn_kwargs={'function': function, **kwargs})

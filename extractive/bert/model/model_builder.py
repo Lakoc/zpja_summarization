@@ -12,7 +12,7 @@ class Bert(nn.Module):
         configuration = DistilBertConfig()
         self.model = DistilBertModel(configuration)
 
-    def forward(self, x, segs, mask):
+    def forward(self, x, mask):
         top_vec = self.model(input_ids=x, attention_mask=mask)[0]
         return top_vec
 
@@ -31,8 +31,8 @@ class ExtSummarizer(nn.Module):
 
         self.to(device)
 
-    def forward(self, src, segs, clss, mask_src, mask_cls):
-        top_vec = self.bert(src, segs, mask_src)
+    def forward(self, src, clss, mask_src, mask_cls):
+        top_vec = self.bert(src, mask_src)
         sents_vec = top_vec[torch.arange(top_vec.size(0)).unsqueeze(1), clss]
         sents_vec = sents_vec * mask_cls[:, :, None].float()
         sent_scores = self.ext_layer(sents_vec, mask_cls).squeeze(-1)
