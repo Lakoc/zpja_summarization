@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 if __name__ == '__main__':
-    part_of_dataset = f'test[:300]'
+    part_of_dataset = f'test[:50%]'
     wiki_how = WikiHow(part_of_dataset)
     metrics = {'rouge1': [], 'rouge2': [], 'rougeL': [], 'time': [], 'method': []}
     rouge_keys = ['rouge1', 'rouge2', 'rougeL']
