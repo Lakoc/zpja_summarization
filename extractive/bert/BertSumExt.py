@@ -6,10 +6,10 @@ from transformers import BertTokenizer
 from extractive.bert.utils import _block_tri
 
 
-class DistilBert(Extractive):
+class BertSumExt(Extractive):
     """BertSumExt distilbert model based by https://github.com/chriskhanhtran/bert-extractive-summarization/"""
 
-    def __init__(self, checkpoint_path='data/checkpoints/distilbert_ext.pt', lang='en_core_web_sm'):
+    def __init__(self, checkpoint_path='data/distilbert_ext.pt', lang='en_core_web_sm'):
         super().__init__(lang)
         checkpoint = torch.load(checkpoint_path, map_location='cpu')
         self.model = ExtSummarizer(checkpoint=checkpoint, bert_type='distilbert', device=self.device)
@@ -80,4 +80,4 @@ class DistilBert(Extractive):
     def summarize(self, document, max_length=4, max_pos=512):
         input_data = self.encode(document, max_pos, device="cpu")
         doc_summary = self.select_sentences(input_data, max_length, block_trigram=True)
-        return doc_summary
+        return ' '.join(doc_summary)

@@ -24,11 +24,11 @@ class CommonBasedTextRank(TextRank):
              for i in range(n_sentences)])
         return sim_mat
 
-    def summarize(self, document, num_sentences):
+    def summarize(self, document, num_sentences=4):
         document = self.en_nlp(document)
         sentences = list(document.sents)
         cleaned_sentences = [[token.lemma_.lower() for token in sentence if
                               not token.is_stop and not token.is_punct] for sentence in sentences]
         sim_mat = self.create_sim_matrix(cleaned_sentences)
         ranked_sentences = [sent.text for sent in self.process_text_ranking(sim_mat, sentences, num_sentences)]
-        return ranked_sentences
+        return ' '.join(ranked_sentences)

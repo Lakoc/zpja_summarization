@@ -24,7 +24,7 @@ class GloveVecBasedTextRank(TextRank):
             return self.embeddings.loc[w].to_numpy().reshape((100, 1))
         return self.default_embedding
 
-    def summarize(self, document, num_sentences=5):
+    def summarize(self, document, num_sentences=4):
         document = self.en_nlp(document)
         sentences = list(document.sents)
         sentence_vectors = np.concatenate([np.mean([self.get_vec(token.lemma_.lower()) for token in sentence if
@@ -33,4 +33,4 @@ class GloveVecBasedTextRank(TextRank):
                                                    axis=0) for sentence in sentences], axis=1)
         sim_mat = self.create_cos_sim_matrix(sentence_vectors)
         ranked_sentences = [sent.text for sent in self.process_text_ranking(sim_mat, sentences, num_sentences)]
-        return ranked_sentences
+        return ' '.join(ranked_sentences)
